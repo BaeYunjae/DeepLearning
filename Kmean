@@ -38,8 +38,6 @@ axes[0].imshow(sample_train)
 axes[1].imshow(sample_label)
 plt.show()
 
-![image](https://user-images.githubusercontent.com/88019800/144374151-0e750536-393c-4fde-86bf-f9facfbc1f4d.png)
-
 label_array = sample_label.reshape(-1, 3)
 
 num_classes = 9
