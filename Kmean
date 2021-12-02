@@ -15,3 +15,38 @@ from torchvision import transforms
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 device = torch.device(device)
 print(device)
+
+root_path = 'C:/Users/default.DESKTOP-CKURP43/Downloads/Assignment/Training set(1844 imgs)/'
+
+data_dir = root_path
+train_dir = os.path.join(data_dir, "Training")
+GTD_dir = os.path.join(data_dir, "GTD")
+
+train_fns = os.listdir(train_dir)
+GTD_fns = os.listdir(GTD_dir)
+
+print(len(train_fns), len(GTD_fns))
+
+sample_train_fp = os.path.join(train_dir, train_fns[0])
+sample_label_fp = os.path.join(GTD_dir, GTD_fns[0])
+sample_train = Image.open(sample_train_fp).convert("RGB")
+sample_label = Image.open(sample_label_fp).convert("RGB")
+sample_train = np.array(sample_train)
+sample_label = np.array(sample_label)
+fig, axes = plt.subplots(1, 2, figsize=(10,5))
+axes[0].imshow(sample_train)
+axes[1].imshow(sample_label)
+plt.show()
+
+label_array = sample_label.reshape(-1, 3)
+
+num_classes = 9
+label_model = KMeans(n_clusters = num_classes)
+label_model.fit(label_array)
+
+label_class = label_model.predict(sample_label.reshape(-1,3)).reshape(600,960)
+fig, axes = plt.subplots(1,3,figsize=(15,5))
+axes[0].imshow(sample_train)
+axes[1].imshow(sample_label)
+axes[2].imshow(label_class)
+plt.show()
